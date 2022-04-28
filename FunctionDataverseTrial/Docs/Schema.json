@@ -1,0 +1,18 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "StartOn": {
+      "type": "string",
+      "format": "date"
+    },
+    "EndOn": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "StartOn",
+    "EndOn"
+  ]
+}
