@@ -1,0 +1,18 @@
+{
+  "generatedBy": "Microsoft.NET.Sdk.Functions.Generator-4.1.0",
+  "configurationSource": "attributes",
+  "bindings": [
+    {
+      "type": "httpTrigger",
+      "route": "test/dataverse/trail",
+      "methods": [
+        "post"
+      ],
+      "authLevel": "function",
+      "name": "request"
+    }
+  ],
+  "disabled": false,
+  "scriptFile": "../bin/FunctionDataverseTrial.dll",
+  "entryPoint": "FunctionDataverseTrial.FunctionDataverseTrail.Run"
+}

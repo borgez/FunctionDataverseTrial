@@ -1,32 +1,57 @@
-#FunctionDataverseTrial
+## Setup
 
-To local run:
+### Prerequisites
+- Install [Visual Studio]
+- Install [dotnet sdk](https://dotnet.microsoft.com/en-us/download)
+- Install [azure cli](https://docs.microsoft.com/ru-ru/cli/azure/install-azure-cli)
+- Install [azure-functions-core-tools](https://docs.microsoft.com/ru-ru/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cazurecli%2Cbash#start) i used **scoop install azure-functions-core-tools**
+
+### Setting Up a Env
+
+#### Local
 1) first init secrets
 > dotnet user-secrets init
 
-2) add secret, replace **username**, **password**, **url** with you actual cred
+1) add secret, replace **username**, **password**, **url** with you actual cred
 > dotnet user-secrets set "ConnectionStrings:DefaultConnection" 
 "AuthType=OAuth;Username=username;Password=password;Url=url" --project "./FunctionDataverseTrial"
 
-3) check
+1) check
 > dotnet user-secrets list --project "./FunctionDataverseTrial"
 
-To azure run:
-> dotnet publish -c Release /p:WebPublishMethod=Package /p:PackageLocation="./"
+#### Azure
+1) create resource_group or use existing
+1) create azure function
+1) set function env **ConnectionStrings:DefaultConnection** with **AuthType=OAuth;Username=username;Password=password;Url=url**
+1) use <resource_group> and <app_name> in publish config from prev steps 
 
-> az login
+### Run App:
 
-> az functionapp deployment source config-local-git -g rent-ready -n FunctionDataverseTrial20220428145733
+- Build: 
+```
+dotnet build
+```
+- Test: 
+```
+dotnet test
+```
+- Publish:  
+may be from VS puplish or cmd
+```
+dotnet publish -c Release -o publish_output FunctionDataverseTrial\FunctionDataverseTrial.csproj
 
-> git remote add azure https://None@functiondataversetrial20220428145733.scm.azurewebsites.net/FunctionDataverseTrial20220428145733.git
+zip publish_output to publish_output.zip
 
+az login  
+az functionapp deployment source config-zip -g <resource_group> -n <app_name> --src publish_output.zip
+```
 
-
-### ps:
+## ps:
 login like some@some.onmicrosoft.com  
 url like https://contoso.crm4.dynamics.com/
 
-### docs:
+## docs:
+https://docs.microsoft.com/ru-ru/azure/azure-functions/functions-run-local?tabs=v4%2Clinux%2Ccsharp%2Cazurecli%2Cbash#start
 https://docs.microsoft.com/en-us/power-apps/developer/data-platform/xrm-tooling/use-xrm-tooling-create-data  
 https://docs.microsoft.com/ru-ru/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=linux  
 https://docs.microsoft.com/en-us/azure/azure-functions/deployment-zip-push  
